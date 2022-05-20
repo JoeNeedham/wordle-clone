@@ -23,7 +23,8 @@ body {
 
 .tile-container {
     width: 330px;
-    margin-bottom: 30px;
+    /* margin-bottom: 30px; */
+    margin: 50px
 }
 
 .key-container {
@@ -67,4 +68,11 @@ body {
 
 .message-container {
     height: 30px;
+}
+
+.message-container p {
+    background-color: #818384;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 0;
 }

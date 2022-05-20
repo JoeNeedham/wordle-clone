@@ -1,5 +1,6 @@
 const tileDisplay = document.querySelector('.tile-container')
 const keyboard = document.querySelector('.key-container')
+const messageDisplay = document.querySelector('.message-container')
 
 const wordle = 'SUPER'
 const keys = [
@@ -42,6 +43,7 @@ const guessRows = [
 ]
 let currentRow = 0
 let currentTile = 0
+let isGameOver = false
 
 guessRows.forEach((guessRow, guessRowIndex) => {
     const rowElement = document.createElement('div')
@@ -67,11 +69,12 @@ keys.forEach(key => {
 const handleClick = (letter) => {
     console.log('clicked', letter)
     if (letter === '«') {
-        console.log('delete letter')
+        deleteLetter()
         return
     }
     if (letter === 'ENTER') {
-        console.log('check row')
+        // console.log('check row')
+        checkRow()
         return
     }
     addLetter(letter)
@@ -86,4 +89,43 @@ const addLetter = (letter) => {
         currentTile++
         console.log('guessRows', guessRows)
     }
+}
+
+const deleteLetter = () => {
+    if (currentTile > 0) {
+        currentTile--
+        const tile = document.getElementById('guessRow-' + currentRow + '-tile-' + currentTile)
+        tile.textContent = ''
+        guessRows[currentRow][currentTile] = ''
+        tile.setAttribute('data', '')
+    }
+}
+
+const checkRow = () => {
+    if (currentTile > 4) {
+        const guess = guessRows[currentRow].join('')
+        console.log('guess is ' + guess, 'wordle is ' + wordle)
+        if (wordle === guess) {
+            showMessage('Magnificent!')
+            isGameOver = true
+            return
+        } else {
+            if (currentRow >= 5) {
+                isGameOver = false
+                showMessage('Game Over')
+                return
+            }
+            if (currentRow < 5) {
+                currentRow++
+                currentTile = 0
+            }
+        }
+    }
+}
+
+const showMessage = (message) => {
+    const messageElement = document.createElement('p')
+    messageElement.textContent = message
+    messageDisplay.append(messageElement)
+    setTimeout(() => messageDisplay.removeChild(messageElement), 2000)
 }
