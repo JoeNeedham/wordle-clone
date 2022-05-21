@@ -129,3 +129,14 @@ const showMessage = (message) => {
     messageDisplay.append(messageElement)
     setTimeout(() => messageDisplay.removeChild(messageElement), 2000)
 }
+
+const flipTile = () => {
+    const rowTiles = document.querySelector('guessRow-' + currentRow).childNodes
+    rowTiles.forEach((tile, index) => {
+        const dataLetter = tile.getAttribute('data')
+
+        if (dataLetter == wordle[index]) {
+            tile.classList.add('green-overlay')
+        }
+    })
+}
