@@ -1,7 +1,7 @@
 const PORT = 8000
 const axios = require("axios");
 const express = require("express")
-
+require('dotenv').config()
 const app = express()
 
 app.listen(PORT, () => console.log('Server running on port' + PORT))
@@ -13,12 +13,13 @@ app.get('/word', (req, res) => {
         params: {count: '5'},
         headers: {
             'X-RapidAPI-Host': 'random-words5.p.rapidapi.com',
-            'X-RapidAPI-Key': 'c977122234msh8668a2a9fceb01ap1a69e2jsnd54aafbddeb3'
+            'X-RapidAPI-Key': process.env.RAPID_API_KEY
         }
     };
     
     axios.request(options).then((response) => {
         console.log(response.data)
+        res.json(response.data[0]) // show in browser
     }).catch((error) => {
         console.error(error)
     })
